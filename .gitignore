@@ -1,0 +1,32 @@
+# Mac
+.DS_Store
+
+# Win
+Thumbs.db
+ehthumbs.db
+
+#IntelliJ
+.idea
+
+#yeoman
+# node_modules
+node_modules
+report
+coverage
+tmp
+
+# Log files
+*.log
+
+#bower_components
+bower_components
+
+### Node ###
+# Logs
+logs
+*.log
+
+# Runtime data
+pids
+*.pid
+*.seed
