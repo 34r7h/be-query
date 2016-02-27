@@ -8,6 +8,6 @@
    * @description
    *
    */
-  angular.module('query', ['ngAria', 'ui.router', 'home']);
+  angular.module('query', ['ngAria', 'ui.router', 'home', 'ngSanitize']);
 })();
 //# sourceMappingURL=app-module.js.map

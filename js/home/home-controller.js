@@ -5,10 +5,58 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 (function () {
 	'use strict';
 
-	var HomeCtrl = function HomeCtrl($http) {
+	
+
+	var HomeCtrl = function HomeCtrl($http, $sce) {
 		_classCallCheck(this, HomeCtrl);
 
+
+
 		var vm = this;
+		vm.data = {};
+		vm.trustSrc = function(src) {
+			console.log('trust src', src);
+    return $sce.trustAsResourceUrl(src);
+  }
+		function browserQuery(query, band){
+			var parsedResult = {};
+			var context = {};
+			context.data = {};
+
+			context.data.key = 'AIzaSyAPQoU5zkFq3_sP3fB-v_V-mUhTspAU1bc';
+			context.data.cx = '009026615269609811859:gj09_ghhxea';
+
+
+			/* irth - query 
+			context.data.key = 'AIzaSyBL3VFlBRvdgmTeTQ_yr_E76RtNrtJn--k';
+			context.data.cx = encodeURIComponent('009026615269609811859:gj09_ghhxea');
+			*/
+
+			var baseUrl = 'https://www.googleapis.com/customsearch/v1';
+			// var query = context.data.query;
+			var queryDebug = '&q=location:new%20york%20city daterange:2457403-2457433 %22Aventura%20%26%20Romeo%20Santos%22 %22bowery%20ballroom%22';
+			var auth = '?key='+context.data.key+'&cx='+context.data.cx;
+			var authQuery = auth+'&q='+query;
+			var authQueryDebug = auth+queryDebug;
+			// console.log(query);
+			var links = [];
+			var req = {
+						method: 'GET',
+						url: baseUrl+authQuery,
+						headers: {
+							'Accept': 'application/json',
+							'Content-Type': 'application/json'
+						}
+						// data: { query: bands[z] && venues[y] && locations[x] ? query : 'something missing' }
+					};
+					$http(req).then(function (success) {
+						console.log(success);
+						vm.data[band] ? null : vm.data[band] = [];
+						vm.data[band].push(success.data);
+					}, function (error) {
+						console.error(error);
+					});
+		}
 		vm.ctrlName = 'HomeCtrl';
 		Date.prototype.getJulian = function () {
 			return Math.floor(this / 86400000 - this.getTimezoneOffset() / 1440 + 2440587.5);
@@ -31,24 +79,12 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 			for (var y = 0; y < bands.length; y++) {
 				queries[bands[y]] = [];
 				for (var z = 0; z < venues.length; z++) {
-					var query = '&q=location:' + encodeURIComponent(locations[x] ? locations[x] : '') + ' ' + dateRange + ' %22' + encodeURIComponent(bands[z] ? bands[z] : '') + '%22 %22' + encodeURIComponent(venues[y] ? venues[y] : '') + '%22';
-
+					//var rawQuery = '&q=location:' + (locations[x] ? locations[x] : '') + ' ' + dateRange + ' %22' + (bands[z] ? bands[z] : '') + '%22 %22' + (venues[y] ? venues[y] : '') + '%22';
+					var rawQuery = 'location:' + (locations[x] ? locations[x] : '') + ' ' + dateRange + ' "' + (bands[z] ? bands[z] : '') + '" "' + (venues[y] ? venues[y] : '') + '"';
+					var query = encodeURIComponent(rawQuery);
 					console.log(bands[z] && venues[y] && locations[x] ? query : 'something missing');
-
-					var req = {
-						method: 'POST',
-						url: 'https://query.stamplayapp.com/api/codeblock/v1/run/gsearch',
-						headers: {
-							'Accept': 'application/json',
-							'Content-Type': 'application/json'
-						},
-						data: { query: bands[z] && venues[y] && locations[x] ? query : 'something missing' }
-					};
-					$http(req).then(function (success) {
-						console.log(success);
-					}, function (error) {
-						error;
-					});
+					browserQuery(query, bands[z]);
+					
 				}
 			}
 		}
