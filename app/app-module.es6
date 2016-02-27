@@ -10,6 +10,9 @@
     .module('query', [
       'ngAria',
       'ui.router',
-      'home'
+      'home',
+      'ngSanitize',
+      'firebase',
+      'ngPrettyJson'
     ]);
 }());

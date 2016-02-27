@@ -1,2 +1,10 @@
-<h2>Search for bands and venues</h2>
-<p>{{home.ctrlName}}</p>
+<article ng-style="{height:'50vh', overflow:'scroll'}"><div ng-repeat="(key,item) in home.data">
+	<h2>{{key}}</h2>
+	<p ng-init="url = home.trustSrc(prop.link)" ng-repeat="(itemKey,prop) in item[1].items">
+		<a ng-href="{{url}}">{{prop.title}}</a>
+	</p>
+
+</div></article>
+<aside ng-style="{height:'50vh', overflow:'scroll'}">
+	yo
+</aside>
