@@ -1,10 +1,16 @@
-<article ng-style="{height:'50vh', overflow:'scroll'}"><div ng-repeat="(key,item) in home.data">
-	<h2>{{key}}</h2>
-	<p ng-init="url = home.trustSrc(prop.link)" ng-repeat="(itemKey,prop) in item[1].items">
-		<a ng-href="{{url}}">{{prop.title}}</a>
-	</p>
-
-</div></article>
-<aside ng-style="{height:'50vh', overflow:'scroll'}">
-	yo
+<button ng-click="show.auth=!show.auth">Auth</button>
+<button ng-click="home.api.querify()">Querify!</button>
+<article ng-show="show.auth">
+    <auth></auth>
+</article>
+<article>
+    <div ng-repeat="(key,venue) in home.state.data">
+        <div ng-repeat="item in venue"><h2>{{key}} | {{item.city}} | {{item.venue}}</h2>
+        <p ng-init="url = home.api.trustSrc(prop.link)" ng-repeat="(itemKey,prop) in item.data.items" ng-if="prop.htmlSnippet.indexOf(item.venue) > -1 && prop.htmlSnippet.indexOf(key) > -1">
+            <a ng-href="{{url}}"><span ng-bind-html="prop.htmlSnippet"></span></a>
+        </p></div>
+    </div>
+</article>
+<aside>
+    <history></history>
 </aside>

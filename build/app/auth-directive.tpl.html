@@ -1,0 +1,18 @@
+<div>{{auth.name}}</div>
+<article ng-if="!home.state.user">
+    <form ng-submit="home.api.login(auth.user, auth.pass)" name="login">
+        <h2>Login</h2>
+        <label for="user-login">User <input id="user-login" type="text" ng-model="auth.user"> </label>
+        <label for="password-login">Pass <input id="password-login" type="password" ng-model="auth.pass"> </label>
+        <button type="submit">Login</button>
+    </form>
+    <form ng-submit="home.api.register(auth.user, auth.pass)" name="register">
+        <h2>Register</h2>
+        <label for="user-new">User <input id="user-new" type="text" ng-model="auth.user"> </label>
+        <label for="password-new">Pass <input id="password-new" type="password" ng-model="auth.pass"> </label>
+        <button type="submit">Register</button>
+    </form>
+</article>
+<article ng-if="home.state.user">
+    <button ng-click="home.api.logout()">Logout {{home.state.user.uid}}</button>
+</article>

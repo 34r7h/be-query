@@ -8,11 +8,9 @@
    */
   angular
     .module('query', [
-      'ngAria',
       'ui.router',
       'home',
       'ngSanitize',
-      'firebase',
-      'ngPrettyJson'
+      'firebase'
     ]);
 }());

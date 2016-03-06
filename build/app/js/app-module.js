@@ -8,6 +8,6 @@
    * @description
    *
    */
-  angular.module('query', ['ngAria', 'ui.router', 'home', 'ngSanitize', 'firebase', 'ngPrettyJson']);
+  angular.module('query', ['ui.router', 'home', 'ngSanitize', 'firebase']);
 })();
 //# sourceMappingURL=app-module.js.map
