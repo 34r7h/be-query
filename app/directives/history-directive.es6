@@ -1,5 +1,3 @@
-'use strict';
-
 (function () {
   'use strict';
 
@@ -19,23 +17,24 @@
      </example>
    *
    */
-  angular.module('query').directive('history', history);
+  angular
+    .module('query')
+    .directive('history', history);
 
   function history() {
     return {
       restrict: 'EA',
-      templateUrl: '/history-directive.tpl.html',
+      templateUrl: 'directives/history-directive.tpl.html',
       replace: false,
       controllerAs: 'history',
-      controller: function controller() {
-        var vm = this;
+      controller() {
+        let vm = this;
         vm.name = 'history';
       },
-      link: function link(scope, element, attrs) {
+      link(scope, element, attrs) {
         /* jshint unused:false */
         /* eslint "no-unused-vars": [2, {"args": "none"}] */
       }
     };
   }
-})();
-//# sourceMappingURL=history-directive.js.map
+}());

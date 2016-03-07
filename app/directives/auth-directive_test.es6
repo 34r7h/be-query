@@ -1,19 +1,19 @@
 /* global describe, beforeEach, it, expect, inject, module */
 'use strict';
 
-describe('history', () => {
+describe('auth', () => {
   let scope
     , element;
 
-  beforeEach(module('query', '/history-directive.tpl.html'));
+  beforeEach(module('query', 'directives/auth-directive.tpl.html'));
 
   beforeEach(inject(($compile, $rootScope) => {
     scope = $rootScope.$new();
-    element = $compile(angular.element('<history></history>'))(scope);
+    element = $compile(angular.element('<auth></auth>'))(scope);
   }));
 
   it('should have correct text', () => {
     scope.$apply();
-    expect(element.isolateScope().history.name).toEqual('history');
+    expect(element.isolateScope().auth.name).toEqual('auth');
   });
 });

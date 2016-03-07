@@ -24,7 +24,7 @@
   function auth() {
     return {
       restrict: 'EA',
-      templateUrl: '/auth-directive.tpl.html',
+      templateUrl: 'directives/auth-directive.tpl.html',
       replace: false,
       controllerAs: 'auth',
       controller() {
