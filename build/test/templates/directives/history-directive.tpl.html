@@ -1,0 +1,33 @@
+<div>{{history.name}}</div>
+<article ng-show="!show.historyItem">
+    <table>
+        <thead>
+        <tr>
+            <th>Search Date</th>
+            <th>Hits</th>
+
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="(dateKey, date) in home.data.history" ng-if="dateKey != 'created'">
+            <td valign="top">{{dateKey | date}}</td>
+            <td valign="top" ng-repeat="(bandsKey, bands) in date track by $index" ng-if="bandsKey != 'undefined'">
+                <h3>{{bandsKey}}</h3>
+                <div ng-repeat="venue in bands" ng-init="limit=2">
+                    <p ng-init="url = home.api.trustSrc(prop.link);"
+                       ng-repeat="(itemKey, prop) in venue.data.items | limitTo:limit"
+                       ng-if="prop.htmlSnippet.indexOf(venue.venue) > -1 && prop.htmlSnippet.indexOf(bandsKey) > -1">
+                        <b ng-show="$first">{{venue.venue}}</b>
+                        <br>
+                        <a ng-href="{{url}}">
+                            <span ng-bind-html="prop.htmlSnippet"></span>
+                        </a>
+                        <br>
+                        <button ng-show="$last" ng-click="$parent.$parent.limit = $parent.$parent.limit + 2">More</button>
+                    </p>
+                </div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</article>
