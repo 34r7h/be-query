@@ -14,11 +14,8 @@
 
   function State() {
     let StateBase = {};
-    StateBase.someValue = 'State';
     StateBase.data = {};
-    StateBase.someMethod = () => {
-      return 'State';
-    };
+
     return StateBase;
   }
 }());
