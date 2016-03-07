@@ -1,0 +1,37 @@
+<form ng-submit="home.api.parseSheet(sheetId, worksheetCount)">
+    <h2>New/Update Google Sheet</h2>
+    <div ng-style="{display:'flex', justifyContent:'space-around'}">
+        <label><p>Enter Google Sheet ID</p><input
+            type="text" ng-model="sheetId"></label>
+        <label><p>Enter Number of Worksheets</p><input type="text" ng-model="worksheetCount"></label>
+        <button type="submit">Fetch Data</button>
+    </div>
+</form>
+<h2 ng-init="query = {}">Search by City</h2>
+<div ng-repeat="(sheetsKey,sheets) in home.data.sheets">
+    <b>Sheet ID:</b> {{sheetsKey}}
+    <div ng-style="{display:'flex', justifyContent:'space-around'}">
+        <div ng-repeat="(sheetKey, sheet) in sheets" ng-init="query[sheet.feed.title.$t] = {bands:[], venues:[]}">
+        <h3>{{sheet.feed.title.$t}} <a href ng-click = "home.api.querify(sheet.feed.title.$t, query[sheet.feed.title.$t].bands, query[sheet.feed.title.$t].venues)">Query it</a></h3>
+        <p>
+            <b>Bands: </b>
+            <span ng-repeat="band in sheet.feed.entry" ng-if="band.gs$cell.row === '1'" ng-init="query[sheet.feed.title.$t].bands.push(band.content.$t)">
+                {{band.content.$t}},
+            </span>
+        </p>
+        <p>
+            <b>Venues: </b>
+            <span ng-repeat="venue in sheet.feed.entry" ng-if="venue.gs$cell.row === '2'" ng-init="query[sheet.feed.title.$t].venues.push(venue.content.$t)">
+                {{venue.content.$t}},
+            </span>
+        </p>
+    </div></div>
+</div>
+<div ng-repeat="(key,venue) in home.state.data">
+    <div ng-repeat="item in venue"><h2>{{key}} | {{item.city}} | {{item.venue}}</h2>
+        <p ng-init="url = home.api.trustSrc(prop.link)" ng-repeat="(itemKey,prop) in item.data.items"
+           ng-if="prop.htmlSnippet.indexOf(item.venue) > -1 && prop.htmlSnippet.indexOf(key) > -1">
+            <a ng-href="{{url}}"><span ng-bind-html="prop.htmlSnippet"></span></a>
+        </p>
+    </div>
+</div>
